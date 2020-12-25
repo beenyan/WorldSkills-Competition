@@ -22,24 +22,24 @@
     <table border="1" cellpadding="20" align="center">
         <tr>
             <td>
-                <Button onclick="location.href='1/User.php'">
+                <Button onclick="location.href='1/index.php'">
                     <h1>使用者管理</h1>
                 </Button>
             </td>
             <td>
-                <Button onclick="location.href='2/Project.php'">
+                <Button onclick="location.href='2/index.php'">
                     <h1>專案管理</h1>
                 </Button>
             </td>
         </tr>
         <tr>
             <td>
-                <Button onclick="location.href='3/User.php'">
+                <Button onclick="location.href='3/index.php'">
                     <h1>組長功能管理</h1>
                 </Button>
             </td>
             <td>
-                <Button onclick="location.href='4/User.php'">
+                <Button onclick="location.href='4/index.php'">
                     <h1>統計管理</h1>
                 </Button>
             </td>

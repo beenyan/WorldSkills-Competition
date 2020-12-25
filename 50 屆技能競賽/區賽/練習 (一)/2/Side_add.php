@@ -1,5 +1,11 @@
 <?php
     include '../connect.php';
+    $id = $_GET['id'];
+    if (mysqli_num_rows(mysqli_query($db, "SELECT * FROM `side` WHERE project_id = $id")) >= 10){
+        echo "面相超過10個<br><button onclick=\"location.href='Side.php?id=$id'\">返回</button>";
+        return;
+    }
+    $_POST['project_id'] = $id;
     $SQL = array(
         "key"=>array(),
         "value"=>array()
@@ -11,14 +17,10 @@
     foreach ($SQL as $key => $value) {
         $SQL[$key] = "(".join(' , ',$value).")";
     }
-    if ($SQL["key"] != "()"){ // 判斷是否有資料(POST)
+    if ($SQL["key"] != "(`project_id`)"){ // 判斷是否有資料(POST)
         $SQL = join(" Values ",$SQL);
-        if ($row = mysqli_fetch_array(mysqli_query($db, "SELECT * FROM `User` WHERE `account` Like '$_POST[account]'")))
-            echo "帳號重複";
-        else {
-            mysqli_query($db, "INSERT INTO `user` $SQL");
-            echo "新增成功";
-        }
+        mysqli_query($db, "INSERT INTO `side` $SQL");
+        echo "新增成功";
     }
 ?>
 <!DOCTYPE html>
@@ -27,17 +29,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>使用者新增</title>
+    <title>面向新增</title>
 </head>
 
 <body>
     <form action="" method="POST">
         <span>Name：</span><input required type="text" name="name"><br>
-        <span>Account：</span><input required type="text" name="account"><br>
-        <span>Password：</span><input required type="password" name="password"><br>
+        <span>Detail：</span><input required type="text" name="detail"><br>
         <input type="submit">
     </form>
-    <button onclick="location.href='index.php'">返回</button>
+    <button onclick="location.href='Side.php?id=<?php echo $id;?>'">返回</button>
 </body>
 
 </html>
