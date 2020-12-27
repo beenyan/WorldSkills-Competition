@@ -1,6 +1,6 @@
 <?php
     include '../connect.php';
-    $id = $_GET['id'];
+    $id = $_SESSION["project"];
     if (!empty($_POST)){
         // 檢查重複
         foreach ($_POST as $key => $value) {

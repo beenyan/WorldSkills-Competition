@@ -1,8 +1,7 @@
 <?php
     include '../connect.php';
     if (empty($_SESSION['user'])) header("Location:../index.php");
-    $user = json_decode($_SESSION['user']);
-    $id = $user->id;
+    $id = $_SESSION['user']["id"];
     $arr = mysqli_query($db, "SELECT * FROM `project` WHERE `leader` = $id or `id` in (SELECT `project_id` FROM `member` WHERE `user_id` = $id)");
 ?>
 <!DOCTYPE html>
@@ -38,8 +37,8 @@
                 echo "<td>$row[1]</td>";
                 echo "<td>$row[2]</td>";
                 echo "<td>$leader</td>";
-                echo "<td><a href='Side.php?id=$row[0]'>面向</a></td>";
-                echo "<td><a href='Project_edit.php?id=$row[0]'>修改</a></td>";
+                echo "<td><a href='../set.php?project=$row[0]&url=3/Side.php'>面向</a></td>";
+                echo "<td><a href='../set.php?project=$row[0]&url=3/Project_edit.php'>修改</a></td>";
                 echo "<td><a onclick='dele($row[0])'>刪除</a></td>";
                 echo "</tr>";
             }

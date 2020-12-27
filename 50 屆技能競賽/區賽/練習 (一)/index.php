@@ -8,7 +8,7 @@
         if (count($SQL)){ // 判斷是否有資料(POST)
             $SQL = join(" AND ",$SQL);
             if ($row = mysqli_fetch_array(mysqli_query($db, "SELECT * FROM `user` WHERE $SQL"))){
-                $_SESSION['user'] = json_encode($row);
+                $_SESSION['user'] = $row;
                 header('Location:Control.php');
             }
             else {

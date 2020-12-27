@@ -1,7 +1,7 @@
 <?php
     include '../connect.php';
-    $id = $_GET['id'];
-    $side = $_GET['side'];
+    $id = $_SESSION['project'];
+    $side = $_SESSION['side'];
     // 修改
     $SQL = array();
     foreach ($_POST as $key => $value) {
@@ -33,7 +33,7 @@
         <span>Detail：</span><input type="text" require name="detail" value="<?php echo "$row[detail]";?>"><br><br>
         <input type="submit">
     </form>
-    <button onclick="location.href='Side.php?id=<?php echo $id;?>'">返回</button>
+    <button onclick="location.href='Side.php'">返回</button>
 </body>
 
 </html>
