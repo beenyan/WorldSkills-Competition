@@ -34,12 +34,12 @@
         </tr>
         <tr>
             <td>
-                <Button onclick="location.href='4/index.php'">
+                <Button onclick="location.href='5/index.php'">
                     <h1>組長功能管理</h1>
                 </Button>
             </td>
             <td>
-                <Button onclick="location.href='5/index.php'">
+                <Button onclick="location.href='6/index.php'">
                     <h1>統計管理</h1>
                 </Button>
             </td>
