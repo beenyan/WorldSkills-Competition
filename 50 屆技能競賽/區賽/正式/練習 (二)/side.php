@@ -24,14 +24,21 @@ $arr = mysqli_query($db, "SELECT * FROM `side` WHERE project_id = $_SESSION[proj
         <td>Name</td>
         <td>Detail</td>
         <td>Action</td>
+        <td>Comment</td>
+        <td>發表意見</td>
     </tr>
 <?php
 while ($row = mysqli_fetch_array($arr)) {
+    $checked = $row['increase'] ? "checked" : "";
     echo "<tr>";
     for ($i = 0; $i <= 2; ++$i) {
         echo "<td>$row[$i]</td>";
     }
-    echo "<td><a href='side_edit.php?side_id=$row[0]'>Edit</a> / <a href='side_dele.php?side_id=$row[0]'>Dele</a>";
+    echo "<td><a href='side_edit.php?side_id=$row[0]'>Edit</a> / <a href='side_dele.php?side_id=$row[0]'>Dele</a></td>";
+    echo "<td><a href='comment.php?side_id=$row[0]'>Comment</a></td>";
+    if ($_SESSION['user']['isAdmin'] == 1 || $_SESSION['user']['id'] == $leader) {
+        echo "<td><input onclick=\"location.href='set.php?send=side&side_id=$row[id]'\" type='checkbox' $checked></td>";
+    }
     echo "</tr>";
 }
 ?>
@@ -46,9 +53,7 @@ if (mysqli_num_rows($arr) < 10) {
     <input type='submit'>
     </form>";
 }
-
 ?>
-
-    <button onclick="location.href='project.php'">Back</button>
+<button onclick="location.href='project.php'">Back</button>
 </body>
 </html>
