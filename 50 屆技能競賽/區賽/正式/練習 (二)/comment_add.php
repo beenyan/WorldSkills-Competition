@@ -19,14 +19,17 @@ if (!empty($_POST)) {
         "value" => array(),
     );
     foreach ($_POST as $key => $value) {
-        if (substr($key,0,8) === "comment_") continue;
-        array_push($SQL["key"],"`$key`");
-        array_push($SQL["value"],"'$value'");
+        if (substr($key, 0, 8) === "comment_") {
+            continue;
+        }
+
+        array_push($SQL["key"], "`$key`");
+        array_push($SQL["value"], "'$value'");
     }
     foreach ($SQL as $key => $value) {
-        $SQL[$key] = "(".join(' , ',$value).")";
+        $SQL[$key] = "(" . join(' , ', $value) . ")";
     }
-    $SQL = join(" Values ",$SQL);
+    $SQL = join(" Values ", $SQL);
     mysqli_query($db, "INSERT INTO `comment` $SQL");
 
     // 延伸意見
@@ -44,7 +47,6 @@ if (!empty($_POST)) {
     mysqli_query($db, "INSERT INTO `comment_stratch` (`comment_id`,`comment_stratch`) VALUES $SQL");
     echo "新增成功";
 }
-$arr = mysqli_query($db, "SELECT * FROM `comment`");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,6 +66,7 @@ $arr = mysqli_query($db, "SELECT * FROM `comment`");
                 <td>內容</td>
             </tr>
             <?php
+$arr = mysqli_query($db, "SELECT * FROM `comment` WHERE side_id = $_SESSION[side_id]");
 while ($row = mysqli_fetch_array($arr)) {
     echo "<tr class='table_title'>";
     echo "<td><input type='checkbox' value='$row[id]' name='comment_$row[0]'></td>";

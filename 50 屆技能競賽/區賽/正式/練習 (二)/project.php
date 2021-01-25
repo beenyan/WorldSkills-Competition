@@ -26,6 +26,7 @@ if ($_SESSION["user"]["isAdmin"]) {
             <td>Leader</td>
             <td>Side</td>
             <td>Action</td>
+            <td>View</td>
         </tr>
         <?php
 while ($row = mysqli_fetch_array($arr)) {
@@ -35,6 +36,9 @@ while ($row = mysqli_fetch_array($arr)) {
     }
     echo "<td><a href='side.php?project_id=$row[0]'>Side</a></td>";
     echo "<td><a href='project_edit.php?project_id=$row[0]'>Edit</a> / <a onclick='Dele($row[0])' href='#'>Dele</a></td>";
+    if ($row['view']) {
+        echo "<td><a href='project_view.php?project_id=$row[0]'>View</a></td>";
+    }
     echo "</tr>";
 }
 ?>
