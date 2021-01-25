@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2021-01-24 04:04:21
+-- 產生時間： 2021-01-25 04:40:09
 -- 伺服器版本： 10.4.14-MariaDB
 -- PHP 版本： 7.2.34
 
@@ -51,7 +51,10 @@ INSERT INTO `comment` (`id`, `title`, `detail`, `time`, `type`, `file`, `user_id
 (005, '第四個意見', '資訊詳細', '2021-01-24', 'audio', 'file/2021-01-24_1611453669.mp3', 1, 1),
 (006, '第五個意見', '詳細資訊', '2021-01-24', '', '', 7, 1),
 (007, '第六個意見	', '詳細資訊', '2021-01-24', '', '', 1, 1),
-(008, '第七個意見', '詳細資訊', '2021-01-24', 'image', 'file/2021-01-24_1611453665.png', 1, 1);
+(008, '第七個意見', '詳細資訊', '2021-01-24', 'image', 'file/2021-01-24_1611453665.png', 1, 1),
+(009, '無聊', 'AA', '2021-01-25', '', '', 1, 2),
+(010, '不無聊', 'GGGG', '2021-01-25', 'image', 'file/2021-01-25_1611536477.png', 1, 3),
+(011, '未知', '159', '2021-01-25', 'image', 'file/2021-01-25_1611536494.png', 1, 4);
 
 -- --------------------------------------------------------
 
@@ -73,6 +76,29 @@ INSERT INTO `comment_stratch` (`id`, `comment_id`, `comment_stratch`) VALUES
 (1, 008, 002),
 (2, 008, 007),
 (3, 008, 008);
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `leader`
+--
+
+CREATE TABLE `leader` (
+  `id` int(11) NOT NULL,
+  `name` text COLLATE utf8_unicode_ci NOT NULL,
+  `project_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- 傾印資料表的資料 `leader`
+--
+
+INSERT INTO `leader` (`id`, `name`, `project_id`) VALUES
+(2, 'GGWP', 2),
+(3, 'fsdf', 2),
+(4, 'dghh', 2),
+(5, 'jghj', 2),
+(6, 'qrwe', 2);
 
 -- --------------------------------------------------------
 
@@ -121,7 +147,10 @@ INSERT INTO `member` (`id`, `project_id`, `user_id`) VALUES
 (63, 9, 6),
 (64, 9, 7),
 (65, 9, 8),
-(66, 9, 9);
+(66, 9, 9),
+(68, 11, 4),
+(69, 11, 5),
+(70, 11, 6);
 
 -- --------------------------------------------------------
 
@@ -133,10 +162,18 @@ CREATE TABLE `plan` (
   `id` int(11) NOT NULL,
   `name` text COLLATE utf8_unicode_ci NOT NULL,
   `detail` text COLLATE utf8_unicode_ci NOT NULL,
-  `start_time` int(11) NOT NULL,
-  `end_time` int(11) NOT NULL,
+  `mode` int(1) NOT NULL DEFAULT 0 COMMENT '0：未開評分\r\n1：開始評分\r\n2：結束評分',
   `project_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- 傾印資料表的資料 `plan`
+--
+
+INSERT INTO `plan` (`id`, `name`, `detail`, `mode`, `project_id`) VALUES
+(2, '第一個方案', 'XD', 1, 2),
+(3, '第二個方案', 'GGWP', 1, 2),
+(4, '待變化', 'ASD', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -150,6 +187,47 @@ CREATE TABLE `plan_comment` (
   `comment_id` int(3) UNSIGNED ZEROFILL NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- 傾印資料表的資料 `plan_comment`
+--
+
+INSERT INTO `plan_comment` (`id`, `plan_id`, `comment_id`) VALUES
+(1, 2, 006),
+(2, 2, 009),
+(3, 2, 010),
+(4, 2, 011),
+(5, 3, 005),
+(6, 3, 009),
+(7, 3, 010),
+(8, 4, 005),
+(9, 4, 009),
+(10, 4, 011);
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `plan_score`
+--
+
+CREATE TABLE `plan_score` (
+  `id` int(11) NOT NULL,
+  `score` int(11) NOT NULL,
+  `plan_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- 傾印資料表的資料 `plan_score`
+--
+
+INSERT INTO `plan_score` (`id`, `score`, `plan_id`, `user_id`) VALUES
+(1, 4, 2, 4),
+(2, 5, 3, 4),
+(3, 4, 4, 4),
+(4, 5, 2, 5),
+(5, 1, 3, 5),
+(6, 1, 4, 5);
+
 -- --------------------------------------------------------
 
 --
@@ -160,22 +238,24 @@ CREATE TABLE `project` (
   `id` int(11) NOT NULL,
   `name` text COLLATE utf8_unicode_ci NOT NULL,
   `detail` text COLLATE utf8_unicode_ci NOT NULL,
-  `leader` int(11) NOT NULL
+  `leader` int(11) NOT NULL,
+  `view` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- 傾印資料表的資料 `project`
 --
 
-INSERT INTO `project` (`id`, `name`, `detail`, `leader`) VALUES
-(2, '社會科研', 'TNT試炸', 1),
-(3, '自然科學', '火焰發射器', 6),
-(4, '死亡數學', '超級無聊', 9),
-(5, '超難英文', '無敵無聊', 8),
-(6, '死亡雷射光', '耗能巨大', 1),
-(7, '動物方程式', '很多動物', 6),
-(8, '我要當隊長', '賄賂中', 5),
-(9, '修改專用', '修改專用', 5);
+INSERT INTO `project` (`id`, `name`, `detail`, `leader`, `view`) VALUES
+(2, '社會科研', 'TNT試炸', 1, 1),
+(3, '自然科學', '火焰發射器', 6, 0),
+(4, '死亡數學', '超級無聊', 9, 0),
+(5, '超難英文', '無敵無聊', 8, 0),
+(6, '死亡雷射光', '耗能巨大', 1, 0),
+(7, '動物方程式', '很多動物', 6, 0),
+(8, '我要當隊長', '賄賂中', 5, 0),
+(9, '修改專用', '修改專用', 5, 0),
+(11, 'Covid 19', 'Can kill erveryone', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -285,6 +365,13 @@ ALTER TABLE `comment_stratch`
   ADD KEY `comment_id` (`comment_id`);
 
 --
+-- 資料表索引 `leader`
+--
+ALTER TABLE `leader`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `project_id` (`project_id`);
+
+--
 -- 資料表索引 `member`
 --
 ALTER TABLE `member`
@@ -306,6 +393,14 @@ ALTER TABLE `plan_comment`
   ADD PRIMARY KEY (`id`),
   ADD KEY `comment_id` (`comment_id`),
   ADD KEY `plan_id` (`plan_id`);
+
+--
+-- 資料表索引 `plan_score`
+--
+ALTER TABLE `plan_score`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `plan_id` (`plan_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- 資料表索引 `project`
@@ -350,7 +445,7 @@ ALTER TABLE `user`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id` int(3) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(3) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `comment_stratch`
@@ -359,28 +454,40 @@ ALTER TABLE `comment_stratch`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- 使用資料表自動遞增(AUTO_INCREMENT) `leader`
+--
+ALTER TABLE `leader`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- 使用資料表自動遞增(AUTO_INCREMENT) `member`
 --
 ALTER TABLE `member`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `plan`
 --
 ALTER TABLE `plan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `plan_comment`
 --
 ALTER TABLE `plan_comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `plan_score`
+--
+ALTER TABLE `plan_score`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `project`
 --
 ALTER TABLE `project`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `project_score`
@@ -425,6 +532,12 @@ ALTER TABLE `comment_stratch`
   ADD CONSTRAINT `comment_stratch_ibfk_3` FOREIGN KEY (`comment_id`) REFERENCES `comment` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- 資料表的限制式 `leader`
+--
+ALTER TABLE `leader`
+  ADD CONSTRAINT `leader_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- 資料表的限制式 `member`
 --
 ALTER TABLE `member`
@@ -443,6 +556,13 @@ ALTER TABLE `plan`
 ALTER TABLE `plan_comment`
   ADD CONSTRAINT `plan_comment_ibfk_1` FOREIGN KEY (`comment_id`) REFERENCES `comment` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `plan_comment_ibfk_2` FOREIGN KEY (`plan_id`) REFERENCES `plan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- 資料表的限制式 `plan_score`
+--
+ALTER TABLE `plan_score`
+  ADD CONSTRAINT `plan_score_ibfk_1` FOREIGN KEY (`plan_id`) REFERENCES `plan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `plan_score_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- 資料表的限制式 `project`

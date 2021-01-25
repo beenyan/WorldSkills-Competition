@@ -1,6 +1,3 @@
-<?php
-include "connect.php";
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +10,7 @@ include "connect.php";
     <button onclick="location.href='project.php'"><h1>專案管理</h1></button>
     <button onclick="location.href='user_plan.php'"><h1>檢視執行方案</h1></button><br><br>
     <button onclick="location.href='leader.php'"><h1>組長功能管理</h1></button>
-    <button onclick="location.href='URL'"><h1>統計管理</h1></button><br><br>
+    <button onclick="location.href='count.php'"><h1>統計管理</h1></button><br><br>
     <button onclick="location.href='index.php'"><h1>登出</h1></button>
 </body>
 </html>
