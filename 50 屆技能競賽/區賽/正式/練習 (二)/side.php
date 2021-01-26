@@ -8,6 +8,7 @@ if (!empty($_POST) && mysqli_num_rows($arr) < 10) {
     // echo "INSERT INTO side $name VALUES $val<br>";
     mysqli_query($db, "INSERT INTO side $name VALUES $val");
 }
+$leader = mysqli_fetch_array(mysqli_query($db, "SELECT * FROM `project` WHERE id = $_SESSION[project_id]"))["leader"];
 $arr = mysqli_query($db, "SELECT * FROM `side` WHERE project_id = $_SESSION[project_id]");
 ?>
 <!DOCTYPE html>
@@ -36,7 +37,7 @@ while ($row = mysqli_fetch_array($arr)) {
     }
     echo "<td><a href='side_edit.php?side_id=$row[0]'>Edit</a> / <a href='side_dele.php?side_id=$row[0]'>Dele</a></td>";
     echo "<td><a href='comment.php?side_id=$row[0]'>Comment</a></td>";
-    if ($_SESSION['user']['isAdmin'] == 1 || $_SESSION['user']['id'] == $leader) {
+    if ($_SESSION['user']['isAdmin'] || $_SESSION['user']['id'] == $leader) {
         echo "<td><input onclick=\"location.href='set.php?send=side&side_id=$row[id]'\" type='checkbox' $checked></td>";
     }
     echo "</tr>";
