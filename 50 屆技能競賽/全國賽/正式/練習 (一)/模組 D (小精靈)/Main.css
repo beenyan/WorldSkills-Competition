@@ -1,0 +1,19 @@
+body,html {
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    /* overflow: hidden; */
+    background-color: #18191A;
+}
+
+#canvas{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    /* transition: 1s;
+    opacity: 0; */
+    background-color: #242526;
+}
