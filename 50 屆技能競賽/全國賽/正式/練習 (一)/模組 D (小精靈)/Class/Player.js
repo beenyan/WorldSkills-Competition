@@ -1,7 +1,7 @@
 class Player {
     constructor(args) {
         let def = {
-            gridPos: { x: 14, y: 22 },
+            gridPos: Player.GridPos,
             pos: { x: 0, y: 0 },
             isMoving: false,
             currentDirection: 'right',
@@ -15,9 +15,12 @@ class Player {
         Object.assign(def, args);
         Object.assign(this, def);
     }
+    static get GridPos() {
+        return { x: 13, y: 24 };
+    }
     init() {
         Object.assign(this, {
-            gridPos: { x: 14, y: 22 },
+            gridPos: Player.GridPos,
             pos: { x: 0, y: 0 },
             isMoving: false,
             currentDirection: 'right',
@@ -32,9 +35,8 @@ class Player {
         if (this.lives <= 0) { // 遊戲結束
             init();
         } else if (number < 0) {
-            let gridPos = this.gridPos;
             Object.assign(this, {
-                gridPos: { x: 14, y: 22 },
+                gridPos: Player.GridPos,
                 pos: { x: 0, y: 0 },
                 isMoving: false,
                 currentDirection: 'right',
@@ -42,13 +44,11 @@ class Player {
                 mouthDeg: 0,
                 mouthDegsign: 1,
             });
-            map.draw(gridPos.x, gridPos.y, false);
         }
         AllText['lives'].update();
     }
     draw() {
         map.eat(this.gridPos.x, this.gridPos.y);
-        map.draw(this.gridPos.x, this.gridPos.y, false);
 
         ctx.fillStyle = 'yellow';
         ctx.save()
@@ -94,17 +94,40 @@ class Player {
         this.gridPos.y += Math.floor(Math.abs(this.pos.y) / scale) * Math.sign(this.pos.y);
         this.pos.x %= scale;
         this.pos.y %= scale;
-        if (this.gridPos.x === 27 && this.gridPos.y === 13 && this.currentDirection === 'right') { // 瞬間移動
-            map.eat(27, 13);
+        if (this.gridPos.x === 26 && this.gridPos.y === 13 && this.currentDirection === 'right') { // 瞬間移動
+            map.eat(26, 13);
             this.gridPos = { x: 0, y: 13 };
-            map.draw(27, 13, false);
+            map.draw(26, 13, false);
         } else if (this.gridPos.x === 0 && this.gridPos.y === 13 && this.currentDirection === 'left') { // 瞬間移動
             map.eat(0, 13);
-            this.gridPos = { x: 27, y: 13 };
+            this.gridPos = { x: 26, y: 13 };
             map.draw(0, 13, false);
         } else if (map.isWall(currentMoveGrid.x, currentMoveGrid.y) === '0') { // 碰到牆
             this.pos = { x: 0, y: 0 };
         }
     }
-
+    changeDirection(direction) {
+        switch (direction) {
+            case 'ArrowLeft':
+            case 'KeyA':
+                this.nextDirection = 'left';
+                this.isMoving = true;
+                break;
+            case 'ArrowRight':
+            case 'KeyD':
+                this.nextDirection = 'right';
+                this.isMoving = true;
+                break;
+            case 'ArrowUp':
+            case 'KeyW':
+                this.nextDirection = 'up';
+                this.isMoving = true;
+                break;
+            case 'ArrowDown':
+            case 'KeyS':
+                this.nextDirection = 'down';
+                this.isMoving = true;
+                break;
+        }
+    }
 }

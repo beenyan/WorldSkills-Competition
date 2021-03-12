@@ -1,19 +1,58 @@
 body,html {
     margin: 0;
+    padding: 0;
     width: 100vw;
     height: 100vh;
-    /* overflow: hidden; */
+    overflow: hidden;
     background-color: #18191A;
 }
 
-#canvas{
+#box{
     position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: auto;
+    height: auto;
+}
+
+#canvas{
+    position: relative;
     top: 0;
-    bottom: 0;
     left: 0;
-    right: 0;
-    margin: auto;
-    /* transition: 1s;
-    opacity: 0; */
     background-color: #242526;
+    border: 0.5vw solid #000000;
+}
+
+#Name{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    font: 3em Arial;
+    width: 65%;
+    height: 7%;
+    padding: 0.2em;
+    border: 0.1vw solid #000000;
+    border-radius: 0.5vw;
+    background-color: #3E4042;
+    box-sizing: border-box;
+    outline: none;
+    color: #9b9b9b;
+}
+
+.print{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 5%;
+    user-select: none;
+    font: 3em Arial;
+    color: #9b9b9b;
+    border: 0.1em solid #000000;
+    border-radius: 0.2em;
+    background-color: #3E4042;
+    padding: 2% 3%;
+    box-shadow: 0 0 40px #3E4042;
+    white-space: nowrap;
 }

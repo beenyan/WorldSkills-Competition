@@ -10,6 +10,7 @@ class Map {
       6：道路()
     ---- */
     this.mapData = data.split('\n').map(row => row.split(',').map(col => parseInt(col)));
+    this.mapData[Player.GridPos.y][Player.GridPos.x] = 3;
     this.wallDate = this.mapData.map((row, y) => row.map((col, x) => this.getWalls(x, y)));
     Object.assign(this, {
       h: this.mapData.length,
@@ -67,10 +68,10 @@ class Map {
     const wallLen = scale / 2;
     const food = scale / 8;
     const power = scale / 3;
-    const bh = limit === true ? y : (limit === false ? Math.max(y - 1, 0) : 0);
-    const eh = limit === true ? y : (limit === false ? Math.min(y + 1, this.h - 1) : this.h - 1);
-    const bw = limit === true ? x : (limit === false ? Math.max(x - 1, 0) : 0);
-    const ew = limit === true ? x : (limit === false ? Math.min(x + 1, this.w - 1) : this.w - 1);
+    const bh = limit === true ? y : (limit === false ? Math.max(y - 2, 0) : 0);
+    const eh = limit === true ? y : (limit === false ? Math.min(y + 2, this.h - 1) : this.h - 1);
+    const bw = limit === true ? x : (limit === false ? Math.max(x - 2, 0) : 0);
+    const ew = limit === true ? x : (limit === false ? Math.min(x + 2, this.w - 1) : this.w - 1);
     ctx.fillStyle = '#242526';
     ctx.save();
     ctx.translate(bw * scale, bh * scale);
@@ -198,6 +199,10 @@ class Map {
       }
     }
     // this.gridLine();
+  }
+  detect() {
+    ghostList.forEach(ghost => this.draw(ghost.gridPos.x, ghost.gridPos.y, false))
+    this.draw(player.gridPos.x, player.gridPos.y, false);
   }
   gridLine() {
     ctx.strokeStyle = '#FFFFFF03';

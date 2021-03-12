@@ -10,12 +10,16 @@
 </head>
 
 <body oncontextmenu="return false">
-    <canvas id="canvas"></canvas>
+    <div id="box">
+        <canvas id="canvas"></canvas>
+        <input type="text" id="Name" maxlength="15" placeholder="Player Name">
+    </div>
 
     <!-- Class -->
     <script src="Class/Player.js"></script>
     <script src="Class/Map.js"></script>
     <script src="Class/Button.js"></script>
+    <script src="Class/Ghost.js"></script>
     <script src="Class/Text.js"></script>
 
     <!-- Main -->
@@ -23,8 +27,12 @@
     <script src="Main.js"></script>
 
     <!-- List -->
-    <script src="TextList.js"></script>
-    <script src="ButtonList.js"></script>
+    <script src="List/TextList.js"></script>
+    <script src="List/ButtonList.js"></script>
+    <script src="List/ScreenList.js"></script>
+
+    <!-- Detect -->
+    <script src="Detect.js"></script>
 </body>
 
 </html>

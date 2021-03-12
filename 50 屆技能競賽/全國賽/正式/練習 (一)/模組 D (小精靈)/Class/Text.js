@@ -36,4 +36,5 @@ class Text {
         })
         ctx.restore();
     }
+    update() { }
 }

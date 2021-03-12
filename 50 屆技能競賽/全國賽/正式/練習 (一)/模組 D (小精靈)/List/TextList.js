@@ -42,4 +42,11 @@ let AllText = {
         text: 'Normal',
         pos: { x: map.w / 2, y: 1 },
     }),
+    title: new Text({
+        align: 'center',
+        text: 'PACMAN',
+        font: `${5 * scale}px Arial`,
+        color: '#c4c449',
+        pos: { x: map.w / 2, y: 3 },
+    }),
 }
