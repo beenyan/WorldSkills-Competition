@@ -2,6 +2,10 @@
     include 'connect.php';
     $form = DB::query("SELECT * FROM `form` WHERE `invite` LIKE '$_GET[invite]'")[0];
     $que = DB::query("SELECT * FROM `question` WHERE `invite` LIKE '$_GET[invite]'");
+    if ($form -> isLocking) {
+        $_SESSION['message'] = '已鎖定';
+        href('manage.php');
+    }
     out();
 ?>
 <!DOCTYPE html>
@@ -111,7 +115,9 @@
                 DB('work', `UPDATE question SET ${join(obj)} WHERE id LIKE '${obj.id}'`);
                 alert('修改完成');
             } else {
-                console.log(obj);
+                let obj = HTO($(self).parent().find('input'));
+                DB('work', `UPDATE question SET ${join(obj)} WHERE id LIKE '${obj.id}'`);
+                alert('修改完成');
             }
         }
         function infedit() {

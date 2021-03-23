@@ -37,7 +37,7 @@ function HTA(sql) {
     })
     return ret;
 }
-function DB(url, data, async = false) {
+function DB(url, data = {}, async = false) {
     let ret;
     if (typeof (data) === 'string')
         data = { sql: data };

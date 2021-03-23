@@ -1,5 +1,9 @@
 <?php
     include 'connect.php';
+    if (isset($_POST['sort'])) {
+        DB::work("DELETE FROM `response` WHERE invite = '$_GET[invite]' AND `sort` = $_POST[sort]");
+        alert('刪除成功');
+    }
     $ques = DB::query("SELECT * FROM `question` WHERE `invite` LIKE '$_GET[invite]'");
 ?>
 <!DOCTYPE html>
@@ -19,6 +23,23 @@
     <div class="head">
         <button class="button" onclick="href('manage.php')">BACK</button>
         <div class="title">詳細資料</div>
+    </div>
+    <div class="information">
+        <form method="POST">
+            <input type="hidden" name="invite" value="<?php echo $_GET['invite'] ?>">
+            刪除第
+            <select name="sort">
+                <?php
+                    $sort = DB::query("SELECT `sort` FROM `response` WHERE `invite` = '$_GET[invite]' GROUP BY `sort`");
+                    foreach ($sort as $key => $val) {
+                        $key++;
+                        echo "<option value='$val->sort'>$key</option>";
+                    }
+                ?>
+            </select>
+            篇
+            <input class="button" type="submit" value="刪除">
+        </form>
     </div>
     <div class="box">
         <?php 
@@ -50,7 +71,6 @@
                     foreach ($res as $key => $value)
                         echo "<p>$value->data</p>";
                 }
-                
                 echo "</div>";
             }
         ?>
