@@ -74,9 +74,7 @@
                     break;
                 }
                 if ($form == 'form') {
-                    $fz = DB::query("SELECT count(*) as total FROM form WHERE invite LIKE '$data[0]'")[0]->total;
-                    pri($fz);
-                    if ($fz) {
+                    if (DB::query("SELECT count(*) as total FROM form WHERE invite LIKE '$data[0]'")[0]->total) {
                         $_SESSION['message'] = '邀請碼重複';
                         href('manage.php');
                     }
