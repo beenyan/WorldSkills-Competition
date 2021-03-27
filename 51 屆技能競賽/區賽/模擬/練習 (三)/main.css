@@ -1,0 +1,37 @@
+body,html{
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+}
+body * {
+    position: relative;
+    text-align: center;
+    box-sizing: content-box;
+    font-size: 24px;
+}
+.hid {
+    position: absolute;
+    width: 0;
+    opacity: 0;
+}
+.block_title{
+    height: 100px;
+    width: 100px;
+}
+.button {
+    cursor: pointer;
+    background-color: rgb(179, 179, 179);
+}
+.title {
+    z-index: 5;
+    position: fixed;
+    height: 100px;
+    width: 100vw;
+    background-color: wheat;
+}
+.required {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    color: red;
+}
